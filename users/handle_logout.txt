@@ -1,0 +1,23 @@
+here instead of using 
+<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a> in the base.html of blog app, i have used,
+<form method="post" action="{% url 'logout' %}" class="nav-item">
+    {% csrf_token %}
+    <button type="submit" class="nav-link btn btn-link">Logout</button>
+</form>
+without replacing this, i have been encountered by an error like,
+"This page isn’t working right now. If the problem continues, contact the site owner.
+HTTP ERROR 405".
+
+here is my full if else part of this base.html 
+
+<div class="navbar-nav">
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}" class="nav-item">
+            {% csrf_token %}
+            <button type="submit" class="nav-link btn btn-link">Logout</button>
+        </form>
+    {% else %}
+        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+    {% endif %}
+ </div>

@@ -1,0 +1,63 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'sidebar/latest_posts.css' %}"> 
+
+<div class="anouncements" >
+    <p id="header" class="text-primary" >Want to anounce something ???</p>
+    <div>
+    <a href="{% url 'anouncement-create' %}"
+    style="text-decoration: none; color: black">
+        <button class="btn btn-outline-info mb-4" 
+        style="width: 100px;" type="submit">Yes</button>
+      </a>
+    </div>
+<!-- Anouncement part starts -->
+    {% if anouncements %}
+        {% for anouncement in anouncements %}
+        <article class="media content-section" style="border: 1px solid blue; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+            <img class="rounded-circle article-img" src="{{ anouncement.author.profile.image.url }}" style="float: left;">
+            <div class="media-body" >
+                <div class="article-metadata">
+                    <a class="mr-2" href="{% url 'user-anouncements' anouncement.author.username %}">{{ anouncement.author }}</a>
+                    <small class="text-muted">{{ anouncement.date_posted | date:"F d, Y" }}</small>
+                </div>
+            
+                <h2><a class="article-title" href="{% url 'anouncement-detail' anouncement.id %}">{{ anouncement.title }}</a></h2>
+                <p class="article-content" style="font-size: larger; font-weight:500">{{ anouncement.content }}</p> 
+            </div>
+        </article>
+        {% endfor %}
+    {% else %}
+        <h1 class="text-primary" id="header"> No anouncements are available at the moment !!!</h1>
+    {% endif %}
+    <!-- anouncement part ends  -->
+</div>
+
+<!-- Pagination starts -->
+<div>
+    {% if is_paginated %}
+    {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number}}">Previous</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+        <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages}}">Last</a>
+    {% endif %}
+
+{% endif %}
+</div>
+<!-- Pagination ends -->
+{% endblock content %}
+

@@ -1,0 +1,53 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'myCalendar/home.css' %}">
+<link rel="stylesheet" href="{% static 'sidebar/latest_posts.css' %}">
+<p id="header" class="text-primary">My Calendar !!!</p>
+<center>
+    <p class="formatted_date">{{ month_year }}</p>
+    <div class="calendar-container" data-year= {{ year }} data-month={{ month }}>
+        <!-- <button id="prevMonthBtn" class="btn btn-outline-info "> << Prev </button> -->
+
+        <table id="calendar-table">
+            <thead>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <!-- Loop through calendar data and render each week -->
+                {% for week in calendar_data %}
+                    <tr>
+                        <!-- Loop through each day in the week -->
+                        
+                        {% for day in week %}
+                            <td {% if day.is_today %}
+                                class="today"
+                                {% endif %}>
+                                {% if day.day != 0 %}
+                                <small id= "day_{{day.day_id}}">{{ day.day }} </small><br>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- <button id="nextMonthBtn" class="btn btn-outline-info">Next >></button> -->
+    </div>
+    <br>
+    <p class="current_date_time"> --- Current Date & Time --- </p>
+    <p class="formatted_date">{{formatted_date}}</p><br> 
+</center>
+
+<script src="{% static 'myCalendar/highlight_current_date.js' %}">
+</script>
+{% endblock %}

@@ -1,0 +1,124 @@
+/* Global Styles */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-size: 1.5em;
+    color: blue;
+}
+
+/* p{
+    font-size: larger; 
+    text-align: center; 
+    font-weight: bold; 
+    margin-bottom: 10px; 
+    padding: 10px; 
+    border: 1px solid gray; 
+    border-radius: 10px;
+} */
+
+#calendar-table {
+    width: 500px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 1.5em;
+    background-color: aliceblue;
+}
+
+#calendar-table th,
+#calendar-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+#prevMonthBtn,
+#nextMonthBtn {
+    padding: 10px;
+    margin: 5px;
+    font-size: 1em;
+    color: blue;
+}
+.formatted_date {
+    font-size: 1.5em;
+    color: gray;
+    font-weight: bold;
+}
+
+.current_date_time {
+    font-size: 1.2em;
+    color: blueviolet;
+    font-weight: bold;
+}
+
+/* Highlight Current Date */
+.current-date {
+    background-color: rgb(123, 168, 235); /* Change this to the desired highlight color */
+    font-size: 25px;
+    color: #fff;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.calendar-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 10px;
+
+}
+
+.formatted_date {
+    font-size: 1.2em;
+}
+
+.current_date_time {
+    font-size: 0.9em;
+}
+
+/* Mobile Responsiveness */
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.2em;
+    }
+    #calendar-table {
+        width: 300px;
+        margin: 0 auto;
+        border-collapse: collapse;
+        font-size: 1em;
+        background-color: aliceblue;
+    }
+    #prevMonthBtn,
+    #nextMonthBtn {
+        font-size: 0.8em;
+    }
+
+    #calendar-table th,
+    #calendar-table td {
+        padding: 8px;
+    }
+
+    .calendar-container {
+        display: flex;
+        flex-direction: column;
+        margin: 5px;
+    }
+}
+
+/* Additional Styles for mobile responsiveness */
+
+
+/* Adjustments for Small Screens */
+@media screen and (max-width: 480px) {
+    .formatted_date {
+        font-size: 1em;
+    }
+
+    .current_date_time {
+        font-size: 0.8em;
+    }
+}
