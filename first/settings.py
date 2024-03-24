@@ -60,12 +60,14 @@ DATABASES = {
 }
 
 # Local server part starts 
+
 # SECRET_KEY = 'django-insecure--_1rucvz*p)zeew4hq5a%4)(&gr5)u&whvh_sflgk2jxaf%=83'
 # DEBUG = True
 # ALLOWED_HOSTS = []
+
 # local server part ends
 
-# # Render postgres part starts
+# Render postgres part starts
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
@@ -73,7 +75,7 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 database_url = os.environ.get("DATABASE_URL")
 DATABASES["default"] = dj_database_url.parse(database_url)
 
-# # Render postgres part ends
+# Render postgres part ends
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -118,6 +120,7 @@ LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login' 
 #if we dont include this here we will encounter an error for trying to enter a profile of not being logged in
 
+# Rendar environment variable part starts
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_PORT = 587

@@ -2,10 +2,12 @@
 {% block content %}
 <article class="media content-section">
     <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}" style="float: left;">
+
     <div class="media-body" >
         <div class="article-metadata">
             <a class="mr-2" href="{% url 'user-anouncements' object.author.username%}">{{ object.author }}</a>
             <small class="text-muted">{{ object.date_posted | date:"F d, Y" }}</small>
+            
             {% if object.author == user %}
             <div>
                 <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'anouncement-update' object.id %}">Update</a>
@@ -13,9 +15,9 @@
             </div>
             {% endif %}
         </div>
+
         <h2 class="article-title">{{ object.title }}</h2>
         <p class="article-content">{{ object.content }}</p>
     </div>
 </article>
 {% endblock content %}
-<!-- | date:"F d, Y" -->

@@ -1,25 +1,25 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'sidebar/weather.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'sidebar/weatherr.css' %}">
 
-<p id="header" class="text-primary">Type your city and country below ...</p><br>
+<p id="header" class="text-primary">Type your city and country below ...</p>
 
 <form method="GET" action="{% url 'sidebar-weather' %}" style="display: flex; flex-direction: column; align-items: center;" >
-   <div id="city-country">
-    <input id= "city" type="text" name="city" placeholder="Enter your city*" required>
-    <input id="country" type="text" name="country" placeholder="Enter your country*" required>
-   </div>
-    <button id="weather-button" class="btn btn-outline-info" type="submit">Get Weather Details</button>
-</form>
+    <div id="city-country">
+     <input id= "city" type="text" name="city" placeholder="Enter your city*" required>
+     <input id="country" type="text" name="country" placeholder="Enter your country*" required>
+    </div>
+     <button id="weather-button" class="btn btn-outline-info" type="submit">Get Weather Details</button>
+ </form>
 
 {% if data %}
     <h1 id="header">Weather Details for {{ data.City }}, {{ data.Country }}</h1>
     <table>
         <thead>
             <tr>
-                <th>Key</th>
-                <th>Value</th>
+                <th>Features</th>
+                <th>Values</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +32,6 @@
         </tbody>
     </table>
 {% else %}
-    <p id="header">No data found for the given city and country</p>
+    <p id="header">No data found for the given city and country ! </p>
 {% endif %}
 {% endblock content %}

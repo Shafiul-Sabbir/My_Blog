@@ -16,11 +16,10 @@
             
                 <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
                 <p class="article-content" id="content">{{ post.content }}</p>
-                
             </div>
         </article>
     {% endfor %}
 
-    <p id="footer">For more posts, go to our blog's <a href="{% url 'blog-home' %}">home page</a></p>
+    <p id="footer">For more posts, go to our blog's <a href="{% url 'blog-home' %}"><i>"home page"</i> </a></p>
 </div>
 {% endblock content %}

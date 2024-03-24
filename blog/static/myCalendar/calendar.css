@@ -1,15 +1,8 @@
-/* Global Styles */
-
 body {
     font-family: Arial, sans-serif;
 }
 
-h1 {
-    font-size: 1.5em;
-    color: blue;
-}
-
-/* p{
+#my_calendar{
     font-size: larger; 
     text-align: center; 
     font-weight: bold; 
@@ -17,7 +10,7 @@ h1 {
     padding: 10px; 
     border: 1px solid gray; 
     border-radius: 10px;
-} */
+}
 
 #calendar-table {
     width: 500px;
@@ -41,13 +34,14 @@ h1 {
     font-size: 1em;
     color: blue;
 }
-.formatted_date {
+
+#formatted_date {
     font-size: 1.5em;
     color: gray;
     font-weight: bold;
 }
 
-.current_date_time {
+#current_date_time {
     font-size: 1.2em;
     color: blueviolet;
     font-weight: bold;
@@ -71,20 +65,9 @@ h1 {
 
 }
 
-.formatted_date {
-    font-size: 1.2em;
-}
-
-.current_date_time {
-    font-size: 0.9em;
-}
-
 /* Mobile Responsiveness */
 
 @media screen and (max-width: 768px) {
-    h1 {
-        font-size: 1.2em;
-    }
     #calendar-table {
         width: 300px;
         margin: 0 auto;
@@ -108,9 +91,6 @@ h1 {
         margin: 5px;
     }
 }
-
-/* Additional Styles for mobile responsiveness */
-
 
 /* Adjustments for Small Screens */
 @media screen and (max-width: 480px) {

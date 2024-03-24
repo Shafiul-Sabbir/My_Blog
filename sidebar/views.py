@@ -44,15 +44,16 @@ class UserAnouncementListView(ListView):
     model = Anouncement
     template_name = 'sidebar/user_anouncements.html' # <app> / <model>_<viewtype>.html
     context_object_name = 'anouncements'
-    # ordering = ['-date_posted'] # for ordering the newest blog to the top of the page.
     paginate_by = 4
     
     def get_queryset(self):
         user = get_object_or_404(User, username = self.kwargs.get('username'))
         return Anouncement.objects.filter(author = user).order_by('-date_posted')
-    # the upper function 'get_queryset' must be this spelling. if there occurs any mispelling 
-    # then the posts of every particular author will not be shown correctly at
-    # user_posts.html page.
+    """ 
+     the upper function 'get_queryset' must be this spelling. if there occurs any mispelling 
+     then the posts of every particular author will not be shown correctly at
+     user_posts.html page.
+    """
     
 class AnouncementDetailView(DetailView):
     model = Anouncement
@@ -89,13 +90,6 @@ class AnouncementDeleteView( LoginRequiredMixin, UserPassesTestMixin, DeleteView
             return True
         return False
 
-def calender(request):
-    context = {
-        'posts' : Post.objects.all().order_by('-date_posted')[:5],
-        'title' : 'Latest Posts'
-    }
-    return render(request, 'sidebar/calender.html', context)
-
 def weather(request):
     # Replace 'YOUR_API_KEY' with your actual API key from OpenWeatherMap
     api_key = '30d4741c779ba94c470ca1f63045390a'
@@ -110,7 +104,8 @@ def weather(request):
     url = f"http://api.openweathermap.org/data/2.5/weather?q={area}&appid={api_key}&units=metric"
     response = requests.get(url)
     data = response.json()
-
+    
+    # wind and wind direction part starts.
     if 'wind' in data:
         direction = data['wind']['deg']
     else:
@@ -136,9 +131,25 @@ def weather(request):
         direction = 'N/A'
     else:
         pass
+    # wind and wind direction part ends.
     
+    # sunrise, sunset and timezone part starts.
+    from datetime import datetime
+    if data['cod'] != '404':
+        timezone = int(data['timezone'])
+        
+        sunrise_utc = int(data['sys']['sunrise'])
+        sunrise_local = datetime.utcfromtimestamp(sunrise_utc + timezone).strftime('%I:%M %p')
 
+        sunset_utc = int(data['sys']['sunset'])
+        sunset_local = datetime.utcfromtimestamp(sunset_utc + timezone).strftime('%I:%M %p')
+    # sunrise, sunset and timezone part ends.
+    else:
+        timezone = 0
+        sunrise_local = 'N/A'
+        sunset_local = 'N/A'
     
+    # weather info part starts.
     if response.status_code == 200:
         weather_info = {
             'Temperature': f"{data['main']['temp']}°C",
@@ -152,15 +163,16 @@ def weather(request):
             'Wind dir': direction,
             'Lat' : f"{data['coord']['lat']}°",
             'Lon' : f"{data['coord']['lon']}°",
-            'Sunrise' : f"{data['sys']['sunrise']} UTC", 
-            'Sunset' : f"{data['sys']['sunset']} UTC",
+            'Sunrise' : sunrise_local, 
+            'Sunset' : sunset_local,
+            'Timezone' : timezone,
             'City' : f"{data['name']}",
             'Country' : f"{data['sys']['country']}",
-        }
-        
+        }  
     else:
         weather_info = None
-        
+    # weather info part ends.
+    
     context = {
         'data' : weather_info,
         'title' : 'Weather',

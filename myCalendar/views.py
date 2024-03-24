@@ -8,29 +8,24 @@ from calendar import monthcalendar
 def generate_calendar_data(year, month):
     # Get the calendar data for the given year and month
     cal_data = monthcalendar(year, month)
-    
     # Initialize an empty list to store calendar data
     calendar_data = []
-    
-    # Iterate over each week in the calendar data
+    # using id for each day
     id = 0
+    # Iterate over each week in the calendar data
     for week in cal_data:
-        
         week_data = []
         # Iterate over each day in the week
         for day in week:
-            # day = int(day)
             if(day != 0):
                 id = id + 1
-            # day = str(day)
+                
             day_data = {
                 'day': day,
                 'day_id' : id,
-            
             }
             week_data.append(day_data)
         calendar_data.append(week_data)
-
     return calendar_data
 
 now = datetime.now()
@@ -55,11 +50,10 @@ def home(request, year=None, month=None):
     formatted_date = now.strftime(date_format)
     month_year = now.strftime("%B, %Y")
     
-    cal = HTMLCalendar().formatmonth(current_year, current_month)
+    # cal = HTMLCalendar().formatmonth(current_year, current_month)
     calendar_data = generate_calendar_data(current_year, current_month)
 
     context={
-        'cal': cal,
         'calendar_data': calendar_data,
         'year' : current_year,
         'month' : current_month,
@@ -74,7 +68,7 @@ def home(request, year=None, month=None):
         return JsonResponse(calendar_data)
     
     # If it's a regular request (not AJAX), render the template as before
-    return render(request, 'myCalendar/home.html', context)
+    return render(request, 'myCalendar/calendar.html', context)
 
 def update_calendar(request, year=None, month=None):
     if year is None or month is None:

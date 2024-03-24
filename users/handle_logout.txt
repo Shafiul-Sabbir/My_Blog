@@ -1,10 +1,12 @@
 here instead of using 
-<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a> in the base.html of blog app, i have used,
+<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a> in the base.html of blog app,
+I have used,
 <form method="post" action="{% url 'logout' %}" class="nav-item">
     {% csrf_token %}
     <button type="submit" class="nav-link btn btn-link">Logout</button>
 </form>
-without replacing this, i have been encountered by an error like,
+
+without replacing this, I have been encountered by an error like,
 "This page isn’t working right now. If the problem continues, contact the site owner.
 HTTP ERROR 405".
 

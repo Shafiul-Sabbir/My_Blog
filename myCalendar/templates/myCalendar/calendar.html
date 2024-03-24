@@ -1,14 +1,14 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'myCalendar/home.css' %}">
-<link rel="stylesheet" href="{% static 'sidebar/latest_posts.css' %}">
-<p id="header" class="text-primary">My Calendar !!!</p>
-<center>
-    <p class="formatted_date">{{ month_year }}</p>
-    <div class="calendar-container" data-year= {{ year }} data-month={{ month }}>
-        <!-- <button id="prevMonthBtn" class="btn btn-outline-info "> << Prev </button> -->
+<link rel="stylesheet" href="{% static 'myCalendar/calendar.css' %}">
+<div>
+    <p id="my_calendar" class="text-primary">My Calendar !!!</p>
 
+<center>
+    <p  id="formatted_date">{{ month_year }}</p>
+    <div id="calendar-container" data-year= {{ year }} data-month={{ month }}>
+        <!-- <button id="prevMonthBtn" class="btn btn-outline-info "> << Prev </button> -->
         <table id="calendar-table">
             <thead>
                 <tr>
@@ -25,8 +25,7 @@
                 <!-- Loop through calendar data and render each week -->
                 {% for week in calendar_data %}
                     <tr>
-                        <!-- Loop through each day in the week -->
-                        
+                        <!-- Loop through each day in the week -->                       
                         {% for day in week %}
                             <td {% if day.is_today %}
                                 class="today"
@@ -44,10 +43,11 @@
         <!-- <button id="nextMonthBtn" class="btn btn-outline-info">Next >></button> -->
     </div>
     <br>
-    <p class="current_date_time"> --- Current Date & Time --- </p>
-    <p class="formatted_date">{{formatted_date}}</p><br> 
+    <p id="current_date_time" > --- Current Date & Time --- </p>
+    <p id="formatted_date">{{formatted_date}}</p><br> 
 </center>
 
+</div>
 <script src="{% static 'myCalendar/highlight_current_date.js' %}">
 </script>
 {% endblock %}

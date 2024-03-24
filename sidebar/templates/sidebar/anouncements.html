@@ -4,8 +4,9 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'sidebar/latest_posts.css' %}"> 
 
+<!-- Anouncement part starts -->
 <div class="anouncements" >
-    <p id="header" class="text-primary" >Want to anounce something ???</p>
+    <p id="header" class="text-primary" >Want to announce something ???</p>
     <div>
     <a href="{% url 'anouncement-create' %}"
     style="text-decoration: none; color: black">
@@ -13,7 +14,7 @@
         style="width: 100px;" type="submit">Yes</button>
       </a>
     </div>
-<!-- Anouncement part starts -->
+
     {% if anouncements %}
         {% for anouncement in anouncements %}
         <article class="media content-section" style="border: 1px solid blue; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
@@ -38,10 +39,10 @@
 <!-- Pagination starts -->
 <div>
     {% if is_paginated %}
-    {% if page_obj.has_previous %}
-        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number}}">Previous</a>
-    {% endif %}
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number}}">Previous</a>
+        {% endif %}
 
     {% for num in page_obj.paginator.page_range %}
         {% if page_obj.number == num %}
@@ -55,7 +56,6 @@
         <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
         <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages}}">Last</a>
     {% endif %}
-
 {% endif %}
 </div>
 <!-- Pagination ends -->
