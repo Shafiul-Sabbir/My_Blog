@@ -18,7 +18,7 @@
     {% if anouncements %}
         {% for anouncement in anouncements %}
         <article class="media content-section" style="border: 1px solid blue; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-            
+            <img class="rounded-circle article-img" src="{{ anouncement.author.profile.image.url }}" style="float: left;">
             <div class="media-body" >
                 <div class="article-metadata">
                     <a class="mr-2" href="{% url 'user-anouncements' anouncement.author.username %}">{{ anouncement.author }}</a>

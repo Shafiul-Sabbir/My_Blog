@@ -1,7 +1,8 @@
 from pathlib import Path
-import dj_database_url
 import os
-
+from dotenv import load_dotenv
+#Load our environmental variables
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,7 +19,8 @@ INSTALLED_APPS = [
     'sidebar.apps.SidebarConfig',
     'myCalendar.apps.MycalendarConfig',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -30,6 +32,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'first.urls'
@@ -54,9 +57,15 @@ WSGI_APPLICATION = 'first.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': 'junction.proxy.rlwy.net',
+        'PORT': '58969',
     }
+    
+    
 }
 
 # Local server part starts 
@@ -64,6 +73,7 @@ DATABASES = {
 SECRET_KEY = 'django-insecure--_1rucvz*p)zeew4hq5a%4)(&gr5)u&whvh_sflgk2jxaf%=83'
 DEBUG = True
 ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = []
 
 # local server part ends
 
@@ -97,7 +107,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static/' # this line is using for defining static folder.
 
-# STATICFILES_STORAGE = os.environ.get("STATICFILES_STORAGE")
+# White noise static stuff
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'

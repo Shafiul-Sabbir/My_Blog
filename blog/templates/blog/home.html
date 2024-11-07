@@ -9,7 +9,7 @@
     <a class="btn btn btn-outline-info btn-md mt-2 mb-4" style="display: block; text-align: center ; width: 130px; margin: 10px auto; padding:10px; border-radius: 10px; font-size: 18px; font-weight: bold" href="{% url 'post-create' %}">Create Blog</a>
     {% for post in posts %}
     <article class="media content-section">
-        
+        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" style="float: left;"> 
 
         <div class="media-body" >
             <div class="article-metadata">
