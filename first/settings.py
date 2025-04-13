@@ -25,7 +25,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -108,13 +108,13 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = 'static/' # this line is using for defining static folder.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     'static/'
 ]
 
 # White noise static stuff
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
