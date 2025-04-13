@@ -6,8 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Anouncement
 from django.contrib.auth.models import User
 from django.views.generic import (
-    ListView, 
-    DetailView, 
+    ListView,
+    DetailView,
     CreateView,
     UpdateView,
     DeleteView
@@ -20,7 +20,7 @@ def latest_posts(request):
         'title' : 'Latest Posts'
     }
     return render(request, 'sidebar/latest_posts.html', context)
-    
+
 def anouncements(request):
     context = {
         'anouncements' : Anouncement.objects.all().order_by('-date_posted'),
@@ -34,7 +34,7 @@ class AnouncementListView(ListView):
     context_object_name = 'anouncements'
     ordering = ['-date_posted'] # for ordering the newest blog to the top of the page.
     paginate_by = 4
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Announcements'
@@ -45,23 +45,23 @@ class UserAnouncementListView(ListView):
     template_name = 'sidebar/user_anouncements.html' # <app> / <model>_<viewtype>.html
     context_object_name = 'anouncements'
     paginate_by = 4
-    
+
     def get_queryset(self):
         user = get_object_or_404(User, username = self.kwargs.get('username'))
         return Anouncement.objects.filter(author = user).order_by('-date_posted')
-    """ 
-     the upper function 'get_queryset' must be this spelling. if there occurs any mispelling 
+    """
+     the upper function 'get_queryset' must be this spelling. if there occurs any mispelling
      then the posts of every particular author will not be shown correctly at
      user_posts.html page.
     """
-    
+
 class AnouncementDetailView(DetailView):
     model = Anouncement
-    
+
 class AnouncementCreateView( LoginRequiredMixin, CreateView):
     model = Anouncement
     fields = ['title', 'content']
-    
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -69,21 +69,21 @@ class AnouncementCreateView( LoginRequiredMixin, CreateView):
 class AnouncementUpdateView( LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Anouncement
     fields = ['title', 'content']
-    
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-    
+
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
             return True
         return False
-    
+
 class AnouncementDeleteView( LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Anouncement
     success_url = reverse_lazy('sidebar_anouncement_list')
-    
+
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
@@ -100,17 +100,17 @@ def weather(request):
         area = f'{city}, {country}'
     else:
         area = 'dhaka, bangladesh'
-    
+
     url = f"http://api.openweathermap.org/data/2.5/weather?q={area}&appid={api_key}&units=metric"
     response = requests.get(url)
     data = response.json()
-    
+
     # wind and wind direction part starts.
     if 'wind' in data:
         direction = data['wind']['deg']
     else:
         direction = 404
-        
+
     if direction > 337.5 or direction <= 22.5:
         direction = 'N'
     elif direction > 22.5 and direction <= 67.5:
@@ -132,12 +132,12 @@ def weather(request):
     else:
         pass
     # wind and wind direction part ends.
-    
+
     # sunrise, sunset and timezone part starts.
     from datetime import datetime
     if data['cod'] != '404':
         timezone = int(data['timezone'])
-        
+
         sunrise_utc = int(data['sys']['sunrise'])
         sunrise_local = datetime.utcfromtimestamp(sunrise_utc + timezone).strftime('%I:%M %p')
 
@@ -148,51 +148,35 @@ def weather(request):
         timezone = 0
         sunrise_local = 'N/A'
         sunset_local = 'N/A'
-    
+
     # weather info part starts.
     if response.status_code == 200:
         weather_info = {
             'Temperature': f"{data['main']['temp']}°C",
             'Feels like': f"{data['main']['feels_like']}°C",
-            'Air pressure': f"{data['main']['pressure']} hPa", 
-            'Description': f"{data['weather'][0]['description']}", 
+            'Air pressure': f"{data['main']['pressure']} hPa",
+            'Description': f"{data['weather'][0]['description']}",
             'humidity': f"{data['main']['humidity']}%",
             'Visibility': f"{data['visibility'] / 1000} km",
-            'Wind speed': f"{data['wind']['speed']} km/h", 
+            'Wind speed': f"{data['wind']['speed']} km/h",
             'Wind deg': f"{data['wind']['deg']}° {direction}",
             'Wind dir': direction,
             'Lat' : f"{data['coord']['lat']}°",
             'Lon' : f"{data['coord']['lon']}°",
-            'Sunrise' : sunrise_local, 
+            'Sunrise' : sunrise_local,
             'Sunset' : sunset_local,
             'Timezone' : timezone,
             'City' : f"{data['name']}",
             'Country' : f"{data['sys']['country']}",
-        }  
+        }
     else:
         weather_info = None
     # weather info part ends.
-    
+
     context = {
         'data' : weather_info,
         'title' : 'Weather',
     }
-    
+
     return render(request, 'sidebar/weather.html', context)
     
-
-        
-
-
-
-
-
-    
-
-    
-
-
-
-
-
-

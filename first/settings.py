@@ -56,24 +56,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'first.wsgi.application'
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'railway',
+    #     'USER': 'postgres',
+    #     'PASSWORD': os.environ['DB_PASSWORD'],
+    #     'HOST': 'junction.proxy.rlwy.net',
+    #     'PORT': '58969',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': 'junction.proxy.rlwy.net',
-        'PORT': '58969',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-    
-    
 }
 
-# Local server part starts 
+# Local server part starts
 
 SECRET_KEY = 'django-insecure--_1rucvz*p)zeew4hq5a%4)(&gr5)u&whvh_sflgk2jxaf%=83'
 DEBUG = True
-ALLOWED_HOSTS = ['myblog-production-1ac6.up.railway.app', 'https://myblog-production-1ac6.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['https://myblog-production-1ac6.up.railway.app']
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['myblog-production-1ac6.up.railway.app', 'https://myblog-production-1ac6.up.railway.app']
+# CSRF_TRUSTED_ORIGINS = ['https://myblog-production-1ac6.up.railway.app']
 
 # local server part ends
 
@@ -122,5 +125,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = 'blog-home'
 # this is the default route for the log in, when we log in first, we will be redirected to the 'blog-home'.
-LOGIN_URL = 'login' 
+LOGIN_URL = 'login'
 #if we dont include this here we will encounter an error for trying to enter a profile of not being logged in
