@@ -74,7 +74,8 @@ DATABASES = {
 
 SECRET_KEY = 'django-insecure--_1rucvz*p)zeew4hq5a%4)(&gr5)u&whvh_sflgk2jxaf%=83'
 DEBUG = False
-ALLOWED_HOSTS = ['first.onrender.com']
+ALLOWED_HOSTS = ['my-blog-sr5s.onrender.com']
+
 # ALLOWED_HOSTS = ['myblog-production-1ac6.up.railway.app', 'https://myblog-production-1ac6.up.railway.app']
 # CSRF_TRUSTED_ORIGINS = ['https://myblog-production-1ac6.up.railway.app']
 
