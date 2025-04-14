@@ -6,6 +6,8 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import cloudinary
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,6 +23,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'whitenoise.runserver_nostatic',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -73,10 +77,10 @@ DATABASES = {
 # Local server part starts
 
 SECRET_KEY = 'django-insecure--_1rucvz*p)zeew4hq5a%4)(&gr5)u&whvh_sflgk2jxaf%=83'
-DEBUG = False
-# DEBUG = True
-ALLOWED_HOSTS = ['my-blog-sr5s.onrender.com']
-# ALLOWED_HOSTS = []
+# DEBUG = False
+DEBUG = True
+# ALLOWED_HOSTS = ['my-blog-sr5s.onrender.com']
+ALLOWED_HOSTS = []
 
 # ALLOWED_HOSTS = ['myblog-production-1ac6.up.railway.app', 'https://myblog-production-1ac6.up.railway.app']
 # CSRF_TRUSTED_ORIGINS = ['https://myblog-production-1ac6.up.railway.app']
@@ -123,8 +127,22 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 # these upper two line is required for supporting bootstrap form handling using bootstrap.
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Cloudinary manual configuration
+cloudinary.config(
+  cloud_name = os.environ.get('CLOUD_NAME'),
+  api_key = os.environ.get('API_KEY'),
+  api_secret = os.environ.get('API_SECRET')
+)
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get("CLOUD_NAME"),
+    'API_KEY': os.environ.get("API_KEY"),
+    'API_SECRET': os.environ.get("API_SECRET"),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 LOGIN_REDIRECT_URL = 'blog-home'
 # this is the default route for the log in, when we log in first, we will be redirected to the 'blog-home'.
